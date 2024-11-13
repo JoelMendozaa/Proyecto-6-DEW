@@ -1,31 +1,328 @@
 body {
     background-color: rgb(169, 203, 255);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.screen {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#inputScreen {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    border: none;
+    resize: none;
+    background-color: transparent;
+    overflow-y: auto;
+}
+
+.document-style {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.document-style::placeholder {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;
+}
 
 .horizontal {
     display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 .tecla {
-    width: 50px;
-    height: 50px;
-    border-color: black;
-    border-width: 5px;
-    margin: 5px;
+    min-width: 40px;
+    height: 40px;
     border: 1px solid black;
+    margin: 2px;
+    padding: 5px;
     text-align: center;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 14px;
+    flex-grow: 1;
+    white-space: nowrap;
+}
 
+/* Estilo de fondo y configuración base */
+body {
+    background-color: rgb(169, 203, 255);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.screen {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#inputScreen {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    border: none;
+    resize: none;
+    background-color: transparent;
+    overflow-y: auto;
+}
+
+.document-style {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.document-style::placeholder {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+.horizontal {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+/* Estilo de teclas: estilo mecánico */
+.tecla, .espacio {
+    min-width: 40px;
+    height: 40px;
+    border: 2px solid #333;
+    margin: 2px;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    transition: all 0.1s ease;
+}
+
+/* Efecto hover */
+.tecla:hover, .espacio:hover {
+    background-color: #d9d9d9;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Efecto de click */
+.tecla:active, .espacio:active {
+    background-color: #c0c0c0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+/* Estilo de fondo y configuración base */
+body {
+    background-color: rgb(169, 203, 255);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.screen {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#inputScreen {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    border: none;
+    resize: none;
+    background-color: transparent;
+    overflow-y: auto;
+}
+
+.document-style {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.document-style::placeholder {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+.horizontal {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+/* Estilo de teclas: estilo mecánico */
+.tecla{
+    min-width: 40px;
+    height: 40px;
+    border: 2px solid #333;
+    margin: 2px;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    transition: all 0.1s ease;
 }
 
 .espacio {
-    width: 170px;
-    height: 50px;
-    border-color: black;
-    border-width: 5px;
-    margin: 5px;
-    border: 1px solid black;
+    width: 200px;
+    height: 40px;
+    border: 2px solid #333;
+    margin: 2px;
+    padding: 5px;
     text-align: center;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    transition: all 0.1s ease;
+}
+
+/* Efecto hover */
+.tecla:hover, .espacio:hover {
+    background-color: #d9d9d9;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Efecto de click */
+.tecla:active, .espacio:active {
+    background-color: #c0c0c0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
 }
