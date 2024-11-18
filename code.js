@@ -1,8 +1,8 @@
 // Variables globales
 let inputScreen = document.getElementById('inputScreen');
-let shiftPresionado = false;
-let blockMayusOn = false;
-let altGrPresionado = false;
+let shiftPressed = false;
+let capsLockOn = false;
+let altGrPressed = false;
 
 // Mapa de caracteres especiales para AltGr + número
 const altGrChars = {
@@ -12,27 +12,27 @@ const altGrChars = {
     '4': '~',
     '5': '€',
     '6': '¬',
-    '7': '/',
-    '8': '(',
-    '9': ')',
-    '0': '=',
+    '7': '{',
+    '8': '[',
+    '9': ']',
+    '0': '}',
 };
 
 // Función para manejar el clic en las teclas virtuales
-function mantenerTecladoVirtual(event) {
+function handleVirtualKeyPress(event) {
     const key = event.target.innerText.toLowerCase();
-    presionarTecla(key);
+    handleKeyPress(key, true);
 }
 
 // Función para manejar las pulsaciones de teclas (tanto virtuales como físicas)
-function presionarTecla(key) {
+function handleKeyPress(key, isVirtual = false) {
     switch(key) {
         case 'shift':
-            shiftPresionado = !shiftPresionado;
+            shiftPressed = !shiftPressed;
             break;
         case 'bloc mayús':
         case 'capslock':
-            blockMayusOn = !blockMayusOn;
+            capsLockOn = !capsLockOn;
             break;
         case 'back':
         case 'backspace':
@@ -49,33 +49,33 @@ function presionarTecla(key) {
             inputScreen.textContent += ' ';
             break;
         case 'alt gr':
-            altGrPresionado = !altGrPresionado;
+            altGrPressed = !altGrPressed;
             break;
         default:
             if (key.length === 1) {
                 let charToAdd = key;
-                if (altGrPresionado && key >= '0' && key <= '9') {
+                if (altGrPressed && (key >= '0' && key <= '9')) {
                     charToAdd = altGrChars[key] || key;
-                } else if (shiftPresionado || blockMayusOn) {
+                } else if (shiftPressed || capsLockOn) {
                     charToAdd = charToAdd.toUpperCase();
                 }
                 inputScreen.textContent += charToAdd;
-                if (shiftPresionado) shiftPresionado = false;
-                if (altGrPresionado) altGrPresionado = false;
+                if (shiftPressed && isVirtual) shiftPressed = false;
+                if (altGrPressed && isVirtual) altGrPressed = false;
             }
     }
 }
 
 // Función para manejar las pulsaciones de teclas físicas
-function mantenerTecladoFisico(event) {
+function handlePhysicalKeyPress(event) {
     if (event.key === 'Shift') {
-        shiftPresionado = true;
+        shiftPressed = true;
     } else if (event.key === 'CapsLock') {
-        blockMayusOn = !blockMayusOn;
+        capsLockOn = !capsLockOn;
     } else if (event.key === 'AltGraph') {
-        altGrPresionado = true;
+        altGrPressed = true;
     } else {
-        presionarTecla(event.key.toLowerCase());
+        handleKeyPress(event.key.toLowerCase());
     }
     
     // Prevenir el comportamiento por defecto para ciertas teclas
@@ -87,21 +87,49 @@ function mantenerTecladoFisico(event) {
 // Función para manejar la liberación de teclas físicas
 function handlePhysicalKeyRelease(event) {
     if (event.key === 'Shift') {
-        shiftPresionado = false;
+        shiftPressed = false;
     } else if (event.key === 'AltGraph') {
-        altGrPresionado = false;
+        altGrPressed = false;
     }
+}
+
+// Función para actualizar el estado visual de las teclas modificadoras
+function updateModifierKeys() {
+    document.querySelectorAll('.tecla').forEach(key => {
+        const keyText = key.innerText.toLowerCase();
+        if (keyText === 'shift') {
+            key.classList.toggle('active', shiftPressed);
+        } else if (keyText === 'bloc mayús') {
+            key.classList.toggle('active', capsLockOn);
+        } else if (keyText === 'alt gr') {
+            key.classList.toggle('active', altGrPressed);
+        }
+    });
 }
 
 // Agregar event listeners
 document.querySelectorAll('.tecla, .espacio').forEach(key => {
-    key.addEventListener('click', mantenerTecladoVirtual);
+    key.addEventListener('mousedown', handleVirtualKeyPress);
+    key.addEventListener('mouseup', updateModifierKeys);
 });
 
-document.addEventListener('keydown', mantenerTecladoFisico);
-document.addEventListener('keyup', handlePhysicalKeyRelease);
+document.addEventListener('keydown', handlePhysicalKeyPress);
+document.addEventListener('keyup', event => {
+    handlePhysicalKeyRelease(event);
+    updateModifierKeys();
+});
 
 // Prevenir el comportamiento por defecto del inputScreen
 inputScreen.addEventListener('keydown', function(event) {
     event.preventDefault();
 });
+
+// Estilo para teclas activas
+const style = document.createElement('style');
+style.textContent = `
+    .tecla.active {
+        background-color: #4a90e2;
+        color: white;
+    }
+`;
+document.head.appendChild(style);
