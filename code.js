@@ -4,24 +4,45 @@ let shiftPressed = false;
 let capsLockOn = false;
 let altGrPressed = false;
 
+// Mapa de caracteres especiales para Shift + número
+const shiftChars = {
+    '1': '!', '2': '"', '3': '·', '4': '$', '5': '%',
+    '6': '&', '7': '/', '8': '(', '9': ')', '0': '='
+};
+
 // Mapa de caracteres especiales para AltGr + número
 const altGrChars = {
-    '1': '|',
-    '2': '@',
-    '3': '#',
-    '4': '~',
-    '5': '€',
-    '6': '¬',
-    '7': '{',
-    '8': '[',
-    '9': ']',
-    '0': '}',
+    '1': '|', '2': '@', '3': '#', '4': '~', '5': '€',
+    '6': '¬', '7': '{', '8': '[', '9': ']', '0': '}'
 };
+
+// Función para actualizar la visualización de las teclas
+function updateKeyDisplay() {
+    document.querySelectorAll('.tecla').forEach(key => {
+        const keyText = key.innerText.toLowerCase();
+        if (keyText.length === 1) {
+            if (shiftPressed || capsLockOn) {
+                key.innerText = keyText.toUpperCase();
+            } else {
+                key.innerText = keyText;
+            }
+        } else if (keyText >= '0' && keyText <= '9') {
+            if (altGrPressed) {
+                key.innerText = altGrChars[keyText] || keyText;
+            } else if (shiftPressed) {
+                key.innerText = shiftChars[keyText] || keyText;
+            } else {
+                key.innerText = keyText;
+            }
+        }
+    });
+}
 
 // Función para manejar el clic en las teclas virtuales
 function handleVirtualKeyPress(event) {
     const key = event.target.innerText.toLowerCase();
     handleKeyPress(key, true);
+    updateKeyDisplay();
 }
 
 // Función para manejar las pulsaciones de teclas (tanto virtuales como físicas)
@@ -56,6 +77,8 @@ function handleKeyPress(key, isVirtual = false) {
                 let charToAdd = key;
                 if (altGrPressed && (key >= '0' && key <= '9')) {
                     charToAdd = altGrChars[key] || key;
+                } else if (shiftPressed && (key >= '0' && key <= '9')) {
+                    charToAdd = shiftChars[key] || key;
                 } else if (shiftPressed || capsLockOn) {
                     charToAdd = charToAdd.toUpperCase();
                 }
@@ -64,6 +87,7 @@ function handleKeyPress(key, isVirtual = false) {
                 if (altGrPressed && isVirtual) altGrPressed = false;
             }
     }
+    updateKeyDisplay();
 }
 
 // Función para manejar las pulsaciones de teclas físicas
@@ -82,6 +106,7 @@ function handlePhysicalKeyPress(event) {
     if (['Tab', 'Enter', 'CapsLock', 'Backspace'].includes(event.key)) {
         event.preventDefault();
     }
+    updateKeyDisplay();
 }
 
 // Función para manejar la liberación de teclas físicas
@@ -91,6 +116,7 @@ function handlePhysicalKeyRelease(event) {
     } else if (event.key === 'AltGraph') {
         altGrPressed = false;
     }
+    updateKeyDisplay();
 }
 
 // Función para actualizar el estado visual de las teclas modificadoras
@@ -133,3 +159,6 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Inicializar la visualización del teclado
+updateKeyDisplay();
